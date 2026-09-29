@@ -15,6 +15,9 @@ function ProductCard({ product }: ProductCardProps) {
         <Flame />
       </div>
       <span className="product-weight">{product.weight} cylinder</span>
+      <span className="product-audience">
+        {product.audiences.length > 1 ? "Home + business" : product.audiences[0] === "home" ? "Household" : "Business"}
+      </span>
       <h2>{product.name}</h2>
       <p>{product.description}</p>
       <div className="product-card-bottom">

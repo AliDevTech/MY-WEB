@@ -1,5 +1,6 @@
 import {
   createContext,
+  useEffect,
   useContext,
   useState,
   type ReactNode,
@@ -19,13 +20,46 @@ type CartContextType = {
 };
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
+const CART_STORAGE_KEY = "lpg-express-cart";
+
+function readSavedCart(): CartItem[] {
+  try {
+    const savedCart: unknown = JSON.parse(
+      localStorage.getItem(CART_STORAGE_KEY) ?? "[]",
+    );
+
+    if (!Array.isArray(savedCart)) {
+      return [];
+    }
+
+    return savedCart.filter(
+      (item): item is CartItem =>
+        typeof item === "object" &&
+        item !== null &&
+        typeof item.id === "number" &&
+        typeof item.quantity === "number" &&
+        Number.isInteger(item.quantity) &&
+        item.quantity > 0,
+    );
+  } catch {
+    return [];
+  }
+}
 
 type CartProviderProps = {
   children: ReactNode;
 };
 
 export function CartProvider({ children }: CartProviderProps) {
-  const [cart, setCart] = useState<CartItem[]>([]);
+  const [cart, setCart] = useState<CartItem[]>(readSavedCart);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+    } catch {
+      return;
+    }
+  }, [cart]);
 
   const addToCart = (product: Product) => {
     setCart((currentCart) => {

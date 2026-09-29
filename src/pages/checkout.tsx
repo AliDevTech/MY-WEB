@@ -2,6 +2,7 @@ import { useState, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../context/cartContext";
 import { ArrowRight, LockKeyhole, MapPin, PackageCheck, ShoppingBasket } from "lucide-react";
+import { saveTrackedOrder } from "../data/orders";
 
 type CheckoutForm = {
   name: string;
@@ -56,9 +57,14 @@ function Checkout() {
       .toString()
       .slice(-6)}`;
 
-    console.log({
+    const deliveryAddress = [form.address, form.area, form.city]
+      .filter(Boolean)
+      .join(", ");
+
+    saveTrackedOrder({
       orderId,
-      customer: form,
+      deliveryAddress,
+      createdAt: new Date().toISOString(),
       cart,
       totalPrice,
     });

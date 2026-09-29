@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, BadgeCheck, CreditCard, MapPin, ShieldCheck, Truck } from "lucide-react";
+import ProductCard from "../component/productcard";
 import heroImage from "../assets/hero.png";
+import { products } from "../data/products";
 
 function Home() {
   return (
@@ -36,6 +38,22 @@ function Home() {
         <div className="feature">
           <span className="feature-icon"><CreditCard size={20} aria-hidden="true" /></span>
           <div><h3>Flexible payment</h3><p>Pay by cash or digital wallet.</p></div>
+        </div>
+      </section>
+
+      <section className="home-products">
+        <div className="home-products-heading">
+          <div>
+            <span className="eyebrow"><BadgeCheck size={15} aria-hidden="true" /> Popular choices</span>
+            <h2>Ready when your kitchen is</h2>
+            <p>Household sizes selected for everyday cooking.</p>
+          </div>
+          <Link to="/products" className="secondary-button">View all cylinders <ArrowRight size={16} aria-hidden="true" /></Link>
+        </div>
+        <div className="product-grid home-product-grid">
+          {products.slice(0, 2).map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
         </div>
       </section>
     </main>

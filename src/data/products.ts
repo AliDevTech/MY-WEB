@@ -7,6 +7,7 @@ export const products: Product[] = [
     description: "Suitable for normal household cooking.",
     weight: "11.8 KG",
     price: 3200,
+    audiences: ["home"],
   },
   {
     id: 2,
@@ -14,6 +15,7 @@ export const products: Product[] = [
     description: "Suitable for larger households and small businesses.",
     weight: "15 KG",
     price: 4100,
+    audiences: ["home", "business"],
   },
   {
     id: 3,
@@ -21,5 +23,6 @@ export const products: Product[] = [
     description: "Suitable for restaurants and commercial kitchens.",
     weight: "45.4 KG",
     price: 12500,
+    audiences: ["business"],
   },
 ];
